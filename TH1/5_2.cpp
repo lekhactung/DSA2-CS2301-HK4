@@ -46,6 +46,26 @@ void input() {
 	}
 }
 
+void inputFile(){
+	ifstream ifs("data5_2.txt");
+	if(ifs.is_open()){
+		int d, x, m;
+		ifs >> n;
+		for (int i = 0; i < n; i++) {
+			ifs >> d;
+			insertFirst(heads[i], d);
+			ifs >> m;
+			for (int j = 0; j < m; j++) {
+				ifs >> x;
+				insertFirst(heads[i], x);
+			}
+		}
+		ifs.close();
+	} else {
+		cout << "Khong mo duoc file! \n";
+	}
+}
+
 void output_list(node *head) {
 	if (head != NULL) {
 		while (head != NULL) {
@@ -60,6 +80,7 @@ void output() {
 		for (int i = 0; i < n; i++) {
 			cout << "Danh sach thu " << i + 1 << ": ";
 			output_list(heads[i]);
+			cout << endl;
 		}
 	}
 	else {
@@ -68,9 +89,8 @@ void output() {
 }
 int main() {
 	init();
-	input();
+	// input();
+	inputFile();
 	output();
-	cout << endl;
-	system("pause");
 	return 1;
 }
