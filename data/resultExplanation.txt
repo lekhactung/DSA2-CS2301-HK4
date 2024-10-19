@@ -1,0 +1,120 @@
+0 1 1 1 0 0 0 0 0 
+1 0 0 0 1 1 0 0 0 
+1 0 0 1 1 0 1 1 1 
+1 0 1 0 0 0 0 0 0 
+0 1 1 0 0 0 0 0 0 
+0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+------BFS-------
+1 2 3 4 5 6 7 8 9 
+
+visited[1] = true;
+q = {1};
+
+--> while ( )
+u = 1; -> q.pop();
+visited[1] = true;
+q = {};
+i = 1 -> 9 ;
+    adj [1][1] != 1 && visited[1] == true; -> break
+    adj [1][2] == 1 && visited[2] != true
+        -> visited[2] = true;
+        q = {2};
+    adj [1][3] == 1 && visited[3] != true
+        -> visited[3] = true;
+        q = {2,3};
+    adj [1][4] == 1 && visited[4] != true
+        -> visited[4] = true;
+        q = {2,3,4};
+    adj [1][5] != 1 && visited[5] != true -> break
+    --> visited{1:false,2:true,3:true,4:true}
+u = 2;
+q = {3,4};
+i = 1 -> 9 ;
+    adj [2][1] == 1 && visited[1] == true -> break; 
+    adj [2][2] != 1 && visited[2] != true -> break;
+    adj [2][5] == 1 && visited[5] != true
+        -> visited[5] = true;
+        q = {3,4,5};
+    adj [2][6] == 1 && visited[6] != true
+        -> visited[6] = true;
+        q = {3,4,5,6};
+    adj [2][7] != 1 && visited[7] != true -> break;
+    --> visited{1:false,2:true,3:true,4:true,5:true,6:true}
+
+
+u = 3 
+q = {4,5,6}
+i = 1 -> 9 ;
+    adj [3][1] == 1 && visited[1] == true -> break; 
+    adj [3][2] != 1 && visited[2] == true -> break;
+    adj [3][3] != 1 && visited[3] == true -> break;
+    adj [3][4] == 1 && visited[4] == true ->break;
+    adj [3][6] == 1 && visited[6] == true ->break
+    adj [3][7] == 1 && visited[7] != true;
+        ->visited[7]= true;
+        q= {4,5,6,7}
+    adj [3][8] == 1 && visited[8] != true;
+        ->visited[8]= true;
+        q= {4,5,6,7,8}
+    adj [3][9] == 1 && visited[9] != true;
+        ->visited[9]= true;
+        q= {4,5,6,7,8,9}
+
+u = 4
+q={5,6,7,8,9}
+i = 1->9;
+adj[4][1] == 1 && visited[1] == true ->break;
+adj[4][2] != 1 && visited[1] == true ->break;
+adj[4][3] == 1 && visited[3] == true ->break;
+adj[4][4] != 1 && visited[4] == true ->break;
+.... 
+
+u = 5
+q={6,7,8,9}
+i = 1->9;
+adj[5][1] != 1 && visited[1] == true ->break;
+adj[5][2] == 1 && visited[1] == true ->break;
+adj[5][3] == 1 && visited[3] == true ->break;
+adj[5][4] != 1 && visited[4] == true ->break;
+.... 
+
+
+u = 6
+q={7,8,9}
+i = 1->9;
+adj[6][1] != 1 && visited[1] == true ->break;
+adj[6][2] == 1 && visited[1] == true ->break;
+adj[6][3] != 1 && visited[3] == true ->break;
+adj[6][4] != 1 && visited[4] == true ->break;
+.... 
+
+
+u = 7
+q={8,9}
+i = 1->9;
+adj[7][1] != 1 && visited[1] == true ->break;
+adj[7][2] != 1 && visited[1] == true ->break;
+adj[7][3] == 1 && visited[3] == true ->break;
+adj[7][4] != 1 && visited[4] == true ->break;
+.... 
+
+u = 8
+q={9}
+i = 1->9;
+adj[8][1] != 1 && visited[1] == true ->break;
+adj[8][2] != 1 && visited[1] == true ->break;
+adj[8][3] == 1 && visited[3] == true ->break;
+adj[8][4] != 1 && visited[4] == true ->break;
+.... 
+
+u = 9
+q={}
+i = 1->9;
+adj[9][1] != 1 && visited[1] == true ->break;
+adj[9][2] != 1 && visited[1] == true ->break;
+adj[9][3] == 1 && visited[3] == true ->break;
+adj[9][4] != 1 && visited[4] == true ->break;
+.... 
