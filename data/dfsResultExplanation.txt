@@ -1,0 +1,53 @@
+0 1 1 1 0 0 0 0 0 
+1 0 0 0 1 1 0 0 0 
+1 0 0 1 1 0 1 1 1 
+1 0 1 0 0 0 0 0 0 
+0 1 1 0 0 0 0 0 0 
+0 1 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+------DFS-------
+1 2 5 3 4 7 8 9 6 
+
+dfs(1,,,)
+-->v = 1
+visited[1] = true;
+i=1->9
+visited[1] == true -> break;
+visited[2] != true && adj[1][2] == 1
+    dfs(2,,,)
+    -->v=2
+    visited[2] = true;
+    i=1->9 
+        visited[1] = true;
+        visited[2] = true;
+        visited[3] != true && adj[2][3]!=1 -> break;
+        visited[4] != true && adj[2][4]!=1 -> break;
+        visited[5] != true && adj[2][5]==1 
+            -> dfs(5,,,)
+            -->v=5
+            visited[5] = true;
+            i=1->9
+                visited[1] = true;
+                visited[2] = true;
+                visited[3] != true && adj[5][3]==1 
+                    -> dfs(3,,,)
+                    -->v=3
+                    visited[3] = true;
+                        i = 1->9
+                        visited[1] = true;
+                        visited[2] = true;
+                        visited[3] = true;
+                        visited[4] != true && adj[3][4]==1 
+                            -> dfs(4,,,)
+                            -->v=4
+                            visited[4] = true;
+                                i = 1->9
+                                visited[1] = true;
+                                visited[2] = true;
+                                visited[3] = true;
+                                visited[4] = true;
+                                visited[5] = true;
+                                visited[6] != true && adj[4][6] != 1; 
+                            
