@@ -1,14 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX 100
-
 vector <int> ans;
-
 void dfs(int v,bool visited[],int adj[MAX][MAX],int n){
     visited[v] = true;
     ans.push_back(v);
     for(int i=1;i<=n;i++){
-        if(adj[v][i]==1 && !visited[i]){
+        if(!visited[i] && adj[v][i]==1){
             dfs(i,visited,adj,n);
         }
     }
@@ -19,16 +17,29 @@ int main(){
     if(ifs.is_open()){
         int n,e;
         ifs >> n >> e;
-        int adj[MAX][MAX]={0};
+        bool visited[n] = {false};
+        int adj[MAX][MAX] = {0};
         for(int i=0;i<e;i++){
             int u,v;
             ifs >> u >> v;
-            adj[u][v] = adj[v][u] = 1;
+            adj[u][v] = adj[v][u] =1;
         }
-        bool visited[MAX]={false};
         dfs(1,visited,adj,n);
-        for(int i=0;i<ans.size();i++){
-            cout << ans[i] << " ";
+        ofstream ofs("../data/output.txt");
+        if(ofs.is_open()){
+            for(int i=1;i<=n;i++){
+                for(int j = 1 ;j <= n ;j++){
+                    ofs << adj[i][j] << " ";
+                }
+                ofs << endl;
+            }    
+            ofs <<  "------DFS-------\n";
+            for(int i=0;i<ans.size();i++){
+                ofs << ans[i] << " ";
+            }
+            ofs.close();
+        } else {
+            cout << "Khong ghi duoc file! \n";
         }
         ifs.close();
     } else{
