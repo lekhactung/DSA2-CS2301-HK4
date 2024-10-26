@@ -9,18 +9,16 @@ void bfs(int v,int n,bool visited[],int adj[MAX][MAX]){
     q.push(v);
     while(!q.empty()){
         int u = q.front();
-        ans.push_back(u);
         q.pop();
+        ans.push_back(u);
         for(int i=1;i<=n;i++){
-            if(adj[u][i]==1 && !visited[i]){
-                visited[i]=true;
+            if(!visited[i] && adj[u][i] == 1 ){
+                visited[i] = true;
                 q.push(i);
             }
         }
     }
 }
-
-
 int main(){
     freopen("../data/data.txt","r",stdin);
     freopen("output.txt","w",stdout);
@@ -32,12 +30,6 @@ int main(){
         int v,e;
         cin >> v >> e;
         adj[v][e] = adj[e][v] = 1;
-    }
-    for(int i=1;i<n;i++){
-        for(int j =1;j<n;j++){
-            cout << adj[i][j] << " ";
-        }
-        cout << endl;
     }
     bfs(1,n,visited,adj);
     for(int i=0;i<ans.size();i++){
