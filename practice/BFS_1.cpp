@@ -1,9 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 int n,m;
-vector <int> adj[1001];
-bool visited[1001] = {false};
+vector<int> adj[1001];
+bool visited[1001];
 
 void input(){
     cin >> n >> m;
@@ -14,20 +13,26 @@ void input(){
     }
 }
 
-void dfs(int u){
-    cout << u << " ";
+void bfs(int u){
+    queue <int> q;
+    q.push(u);
     visited[u] = true;
-    for(auto x:adj[u]){
-        if(!visited[x]){
-            dfs(x);
+    while(!q.empty()){
+        int v = q.front();
+        q.pop();
+        cout << v << " ";
+        for(auto x: adj[v]){
+            if(!visited[x]){
+                q.push(x);
+                visited[x] = true;
+            }
         }
     }
 }
 
-
 int main(){
     freopen("../data/undirectedGraphData1.txt","r",stdin);
     input();
-    dfs(1);
+    bfs(1);
     return 1;
 }
