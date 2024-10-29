@@ -5,8 +5,8 @@ using namespace std;
 #define MAX 20
 
 char vertex[MAX];
-int n;
-int C[MAX],bfs[MAX],nbfs=0,a[MAX][MAX];
+int n,nbfs=0;
+int C[MAX],bfs[MAX],a[MAX][MAX];
 
 void output(int a[][MAX],int n);
 void inputMatrix(int a[][MAX],int &n);
@@ -18,11 +18,17 @@ void pop(int &x);
 void outputBFS();
 void BFS(int s);
 
-void main(){
+int main(){
     inputMatrix(a,n);
     output(a,n);
     BFS(0);
-    outputBFS();
+    // outputBFS();
+    int character = 65;
+	cout << "RESULT : ";
+	for (int i = 0; i < nbfs; i++) {
+		cout << char(bfs[i]+character) << " ";
+	}
+    return 1;
 }
 
 void inputMatrix(int a[][MAX],int &n){
@@ -39,7 +45,13 @@ void inputMatrix(int a[][MAX],int &n){
 }
 
 void output(int a[][MAX],int n){
+    cout << "  ";
     for(int i=0;i<n;i++){
+        cout << vertex[i] << " ";
+    }
+    cout << endl;
+    for(int i=0;i<n;i++){
+        cout << vertex[i] << " ";
         for(int j=0;j<n;j++){
             cout << a[i][j] << " ";
         }
@@ -71,28 +83,56 @@ int isEmpty(){
     return 0;
 }
 
-node *createNode(int x){
-    node *p = new node;
-    p->info = x;
-    p->next = NULL;
-    return p;
-}
-
 void push(int x){
-    if(front == NULL){
-        front = rear = createNode(x);
-    } else{
-        node *p = createNode(x);
-        p->next = front;
-        front = p;
-    }
+    node *p = new node;
+	if (p == NULL) {
+		return;
+	}
+	p->info = x;
+	p->next = NULL;
+	if (rear == NULL) {
+		front = p;
+	}
+	else {
+		rear->next = p;
+	}
+	rear = p;
 }
 
 void pop(int &x){
-    if(front != NULL ){
-        
-    }
-    return;
+   if (front != NULL) {
+		node *p = front;
+		x = p->info;
+		front = front->next;
+		if (front == NULL) {
+			rear = NULL;
+		}
+		delete p;
+	}
 }
-void outputBFS();
-void BFS(int s);
+
+void BFS(int s){
+    initEdges();
+	initQ();
+	push(s);
+	C[s] = 0;
+	while (!isEmpty() ){
+		int p;
+		pop(p);
+		bfs[nbfs++] = p;
+		for (int i = 0; i < n; i++) {
+			if (C[i] == 1 && a[p][i] == 1) {
+				push(i);
+				C[i] = 0;
+			}
+		}
+	}
+}
+
+void outputBFS(){
+    int character = 65;
+	cout << "RESULT : ";
+	for (int i = 0; i < nbfs; i++) {
+		cout << char(bfs[i]+character) << " ";
+	}
+}
