@@ -1,52 +1,29 @@
-//DFS =  DEPTH FIRST SEARCH
-#include <bits/stdc++.h>
-using namespace std;
-#define MAX 100
-vector <int> ans;
-void dfs(int v,bool visited[],int adj[MAX][MAX],int n){
-    visited[v] = true;
-    ans.push_back(v);
-    for(int i=1;i<=n;i++){
-        if(!visited[i] && adj[v][i]==1){
-            dfs(i,visited,adj,n);
-        }
-    }
-}
+void DFS(int x)
+{
+    stack s;
+    init(s);
+    push(s, x);            // Đưa đỉnh bắt đầu vào ngăn xếp
+    dfs[ndfs++] = x;
+    C[x] = 0;
 
-int main(){
-    ifstream ifs("data3.txt");
-    if(ifs.is_open()){
-        int n,e;
-        ifs >> n >> e;
-        bool visited[n] = {false};
-        int adj[MAX][MAX] = {0};
-        for(int i=0;i<e;i++){
-            int u,v;
-            ifs >> u >> v;
-            adj[u][v] = adj[v][u] =1;
-        }
-        dfs(1,visited,adj,n);
-        ofstream ofs("output.txt",ios::app);
-        if(ofs.is_open()){
-            // for(int i=1;i<=n;i++){
-            //     for(int j = 1 ;j <= n ;j++){
-            //         ofs << adj[i][j] << " ";
-            //     }
-            //     ofs << endl;
-            // }    
-            ofs <<  "------DFS-------\n";
-            for(int i=0;i<ans.size();i++){
-                ofs << ans[i] << " ";
+    while (!isEmpty(s))
+    {
+        int u = pop(s);    // Lấy đỉnh ở đầu ngăn xếp và xóa nó
+        bool hasUnvisitedNeighbor = false;
+
+        for (int v = 0; v < n; v++) {
+            if (A[u][v] != 0 && C[v] == 1) { // Kiểm tra đỉnh kề chưa xét
+                push(s, u);                 // Đẩy lại đỉnh hiện tại vào ngăn xếp
+                push(s, v);                 // Đẩy đỉnh kề vào ngăn xếp
+                dfs[ndfs++] = v;            // Ghi nhận vào danh sách DFS
+                C[v] = 0;                   // Đánh dấu đỉnh kề đã xét
+                hasUnvisitedNeighbor = true;
+                break;                      // Dừng vòng lặp vì đã tìm thấy đỉnh kề chưa xét
             }
-            ofs << endl;
-            ofs.close();
-        } else {
-            cout << "Khong ghi duoc file! \n";
         }
-        ifs.close();
-    } else{
-        cout << "Khong mo duoc file! \n";
-    }
 
-    return 1;
+        if (!hasUnvisitedNeighbor && isEmpty(s)) {
+            push(s, u); // Nếu không có đỉnh kề chưa xét, tiếp tục duyệt đỉnh tiếp theo
+        }
+    }
 }
