@@ -19,7 +19,7 @@ void make_set(){
 }
 
 int find(int v){
-    if(v== parent[v]) return v;
+    if(v == parent[v]) return v;
     return parent[v] = find(parent[v]);
 }
 
