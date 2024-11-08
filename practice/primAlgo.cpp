@@ -1,15 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 int n,m;
-struct spanningTree{
-    
-};
+
 
 
 int main(){
-    freopen("minimumSpanningTreeData.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-
+    freopen("../data/minimumSpanningTreeData2.txt","r",stdin);
+    
 
     return 1;
 }

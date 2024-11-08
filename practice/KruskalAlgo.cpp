@@ -72,7 +72,7 @@ void kruskal(){
 }
 
 int main(){
-    freopen("../data/minimumSpanningTreeData.txt","r",stdin);
+    freopen("../data/minimumSpanningTreeData2.txt","r",stdin);
     input();
     make_set();
     kruskal();
