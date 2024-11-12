@@ -30,6 +30,7 @@ void XoaViTriE(int i)
 	}
 	nE--;
 }
+
 void XoaCanhE(int u, int v)
 {
 	for (int i = 0; i<nE; i++)
@@ -90,6 +91,17 @@ void inp() {
 	ifs.close();
 }
 
+void input() {
+	cout << "Nhap so dinh cua do thi: ";
+	cin >> n;
+	cout << "Nhap ma tran ke cua do thi : ";
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> a[i][j];
+		}
+	}
+}
+
 void output()
 {
 	int tong = 0;
@@ -101,10 +113,45 @@ void output()
 	cout << "\nTong = " << tong << endl;
 }
 
+void menu() {
+	cout << "1. Nhap do thi tu ban phim \n"
+		<< "2. Nhap do thi tu file \n"
+		<< "3. Prim \n"
+		<< "0. Thoat ! \n"
+		<< "Lua chon : ";
+}
 int main() {
-	inp();
-	prim(0);
-	output();
+	int choice;
+	do {
+		do {
+			system("cls");
+			menu();
+			cin >> choice;
+			if (choice == 0) {
+				break;
+			}
+			if (choice != 1 && choice != 2 && choice != 3) {
+				cout << "Lua chon khong hop le! \n";
+			}
+		} while (choice != 1 && choice != 2 && choice != 3);
+		switch (choice)
+		{
+		case 1:
+			input();
+			break;
+		case 2:
+			inp();
+			break;
+		case 3:
+			int x;
+			cout << "Nhap dinh bat dau: "; cin >> x;
+			prim(x);
+			output();
+			break;
+		default:
+			break;
+		}
+	} while (choice != 0);
 	system("pause");
 	return 1;
 }

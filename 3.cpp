@@ -13,8 +13,7 @@ edge mst[MAX];
 bool visited[MAX];
 
 
-void inp() {
-
+void inpF() {
 	ifstream ifs("data3.txt");
 	if (ifs.is_open()) {
 		ifs >> n >> m;
@@ -22,7 +21,7 @@ void inp() {
 			edge e;
 			int x, y, z; ifs >> x >> y >> z;
 			e.v = x; e.u = y; e.w = z;
-		/*	mst[i] = e;*/
+			mst[i] = e;
 		}
 	}
 }
@@ -84,7 +83,7 @@ void prim(int s) {
 }
 
 int main() {
-	inp();
+	inpF();
 	prim(0);
 	system("pause");
 	return 1;
