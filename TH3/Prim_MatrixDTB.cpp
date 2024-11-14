@@ -22,8 +22,7 @@ int TonTai(int d, int D[], int nD) {
 
 void XoaViTriE(int i)
 {
-	for (int j = i; j<nE; j++)
-	{
+	for (int j = i; j<nE; j++) {
 		E1[j] = E1[j + 1];
 		E2[j] = E2[j + 1];
 		wE[j] = wE[j + 1];
@@ -34,8 +33,7 @@ void XoaViTriE(int i)
 void XoaCanhE(int u, int v)
 {
 	for (int i = 0; i<nE; i++)
-		if (E1[i] == u && E2[i] == v)
-		{
+		if (E1[i] == u && E2[i] == v){
 			XoaViTriE(i);
 			break;
 		}
