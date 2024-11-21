@@ -149,7 +149,7 @@ int main() {
 		default:
 			break;
 		}
-	} while (choice != 0);
 	system("pause");
+	} while (choice != 0);
 	return 1;
 }

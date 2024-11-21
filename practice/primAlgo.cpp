@@ -16,7 +16,7 @@ bool exist(int d,int D[],int nD){
 }
 
 void xoaViTriE(int i){
-    for(int j=i;i<nE;j++){
+    for(int j=i;j<nE;j++){
         E1[j] = E1[j+1];
         E2[j] = E2[j+1];
         wE[j] = wE[j+1];
@@ -80,7 +80,7 @@ void prim(int s){
         a[d2][d1] = 0;
         nT++;
         xoaCanhE(d1,d2);
-        u=d2;
+        u = d2;
     }
 }
 
@@ -94,7 +94,7 @@ void outp(){
 	cout << "\nTong = " << tong << endl;
 }
 int main(){
-    freopen("../data/minimumSpanningTreeData2.txt","r",stdin);
+    freopen("../TH3/data2.txt","r",stdin);
     inp();
     prim(0);
     outp();
