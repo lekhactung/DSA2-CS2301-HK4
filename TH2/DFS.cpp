@@ -82,7 +82,7 @@ void DFS(int x)
     while(!isEmpty(s))
     {
         if(v==n){
-            pop(s);
+           u = pop(s);
         }
         for(v=0;v<n;v++) {
             if(A[u][v]!=0 && C[v]==1){
