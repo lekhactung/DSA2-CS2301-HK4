@@ -29,8 +29,6 @@ void kruskal()
 			T1[nT] = E1[i];
 			T2[nT] = E2[i];
 			wT[nT] = wE[i];
-			a[i][j] = 0;
-			a[j][i] = 0;
 			nT++;
 			if (nT == n - 1) {
 				break;
@@ -47,8 +45,6 @@ void taoE()
 				E1[nE] = i;
 				E2[nE] = j;
 				wE[nE] = a[i][j];
-				a[i][j] = 0;
-				a[j][i] = 0;
 				nE++;
 			}
 }
@@ -96,6 +92,6 @@ int main() {
 	kruskal();
 	output();
 
-	system("pause");
+	// system("pause");	
 	return 1;
 }
