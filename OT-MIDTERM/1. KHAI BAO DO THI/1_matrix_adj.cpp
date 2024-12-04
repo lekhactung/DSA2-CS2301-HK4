@@ -10,7 +10,7 @@ void init(){
 }
 
 void inp(){
-    ifstream ifs("../data/matrix.txt");
+    ifstream ifs("1_matrix_adj.txt");
     if(ifs.is_open()){
         ifs >> n;
         for(int i=0;i<n;i++){
@@ -24,10 +24,18 @@ void inp(){
     ifs.close();
 }
 
-
+void output(){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout << adj[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
 int main(){
     init();
-
+    inp();
+    output();
     return 1;
 }
