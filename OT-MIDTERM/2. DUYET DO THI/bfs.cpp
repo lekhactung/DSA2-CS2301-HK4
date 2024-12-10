@@ -18,14 +18,6 @@ node *front, *rear;
 void initQ(){
     front = rear = NULL;
 }
-
-node *createNode(int x){
-    node *p = new node;
-    p->info = x;
-    p->next = NULL;
-    return p;
-}
-
 bool isEmpty(){
     if(front ==NULL){
         return true;
@@ -37,7 +29,7 @@ void pushQ(int x){
     node *p = new node;
 	if (p == NULL) {
 		return;
-	}
+	} 
 	p->info = x;
 	p->next = NULL;
 	if (rear == NULL) {
