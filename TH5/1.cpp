@@ -1,13 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <vector>
 using namespace std;
 #define MAX 1000
 
 int n = 0,m = 0;
 
 void random() {
-	ofstream ofs("bt1.txt",ios::in);
+	ofstream ofs("bt1.txt");
 	if (ofs.is_open()) {
 		cout << "So luong phan tu muon tao  : "; int n; cin >> n;
 		ofs << n << endl;
@@ -51,22 +52,6 @@ int max(int a[],int n) {
 	}
 	return a[max];
 }
-//
-//void countingSort(int a[],int n,int &m) {
-//	m = max(a, n);
-//	int *count = new int[m];
-//	count = { 0 };
-//	for (int i = 0; i < n; i++) {
-//		count[a[i]] += 1;
-//	}
-//	for (int i = 0; i <= m; i++) {
-//		count[i] += count[i - 1];
-//
-//	}
-//
-//
-//	delete []count;
-//}
 
 void Countingsort(int a[], int b[], int k, int n, int & kt)
 {
@@ -140,6 +125,74 @@ void ShellSortDesc(int a[], int n) {
 	}
 }
 
+void insertionSort(float a[],int n){
+	for(int i=1;i<n;i++){
+		float x = a[i];
+		int pos = i-1;
+		while(pos>=0 && a[pos]>x){
+			a[pos+1] = a[pos];
+			pos--;
+		}
+		a[pos+1] = x;
+	}
+}
+
+void bucketSort(float a[],int n) {
+	const int bucket_count = 10;
+	float buckets[bucket_count][n];
+	int bucketSize[bucket_count] = {0};
+
+	for(int i=0;i<n;i++){
+		int bucketIndex = a[i] * bucket_count;
+		buckets[bucketIndex][bucketSize[bucketIndex]++] = a[i];
+	}
+
+	for(int i=0;i<bucket_count;i++){
+		insertionSort(buckets[i],bucketSize[i]);
+	}
+
+	int index = 0;
+	for(int i=0;i<bucket_count;i++){
+		for(int j=0;j<bucketSize[i];j++){
+			a[index++] = buckets[i][j];
+		}
+	}
+}
+
+void insertionSortDesc(float a[],int n){
+	for(int i=1;i<n;i++){
+		float x = a[i];
+		int pos = i-1;
+		while(pos>=0 && a[pos]<x){
+			a[pos+1] = a[pos];
+			pos--;
+		}
+		a[pos+1] = x;
+	}
+}
+
+void bucketSortDesc(float a[],int n) {
+	const int bucket_count = 10;
+	float buckets[bucket_count][n];
+	int bucketSize[bucket_count] = {0};
+
+	for(int i=0;i<n;i++){
+		int bucketIndex = a[i] * bucket_count;
+		buckets[bucketIndex][bucketSize[bucketIndex]++] = a[i];
+	}
+
+	for(int i=0;i<bucket_count;i++){
+		insertionSortDesc(buckets[i],bucketSize[i]);
+	}
+
+	int index = 0;
+	for(int i=bucket_count-1;i>=0;i--){
+		for(int j=0;j<bucketSize[i];j++){
+			a[index++] = buckets[i][j];
+		}
+	}
+}
+
 void menu() {
 	cout << "0. Khoi tao mang moi random!\n"
 		<< "1. Counting Sort (Tang dan) \n"
@@ -194,8 +247,31 @@ int main() {
 			cout << "mang sau khi sap xep la :";
 			output(a, n);
 			break;
+		case 5:
+			{
+			float arr[] = {0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434};
+			int z = sizeof(arr) / sizeof(arr[0]);
+			cout << "Mang sau khi sap xep la: ";
+			bucketSort(arr,z); 
+			for(int i=0;i<z;i++){
+				cout << arr[i] << " ";
+			}
+			cout << endl;
+			break;
+			}
+		case 6: 
+			{
+			float arr[] = {0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434};
+			int z = sizeof(arr) / sizeof(arr[0]);
+			cout << "Mang sau khi sap xep la: ";
+			bucketSortDesc(arr,z); 
+			for(int i=0;i<z;i++){
+				cout << arr[i] << " ";
+			}
+			cout << endl;
+			break;
+			}
 		}
-	
 		system("pause");
 		system("cls");
 	} while (choice != -1);
