@@ -32,7 +32,7 @@ void inputMatrix(int a[][MAX], int &n) {
 		}
 	}*/
 
-	ifstream ifs("data2.txt");
+	ifstream ifs("data4.txt");
 	ifs >> n;
 	for (int i = 0; i < n; i++) {
 		ifs >>  vertex[i];

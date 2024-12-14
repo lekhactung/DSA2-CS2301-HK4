@@ -6,7 +6,7 @@ using namespace std;
 #define INF 1e9
 int vertices_quantity , edges_quantity;
 int matrix[MAX][MAX];
-char name[8]={'A','B','C','D','E','G','H','K'};
+char name[]={'A','B','C','D','E','G','H','K'};
 
 struct node{
     int info;
@@ -19,11 +19,8 @@ void initQueue(){
     head = tail = NULL;
 }
 
-bool isEmpty(){
-    if(head == NULL){
-        return true;
-    }
-    return false;
+bool isEmptyQ(){
+    return head == NULL;
 }
 
 void pushQ(int x){
@@ -48,7 +45,7 @@ void popQ(int &x){
         x = p->info;
         head = head->next;
         if(head ==NULL){
-            tail ==NULL;
+            tail = NULL;
         }
         delete p;
     }
@@ -58,6 +55,7 @@ void init(){
     vertices_quantity =0;
     edges_quantity =0;
     matrix[MAX][MAX] = {0};
+    
 }
 
 void inp(){
@@ -131,9 +129,37 @@ void output_matrix(){
         }
 }
 
+int bfs[MAX], nbfs=0;
+bool visited[MAX] ={false};
 void BFS(int s){
+    initQueue();
+    pushQ(s);
+    visited[s] = true;
+    while(!isEmptyQ()){
+        int p;
+        popQ(p);
+        bfs[nbfs++] = p;
+        cout << name[p] << " ";
+        for(int i=1;i<=vertices_quantity;i++){
+            if(matrix[p][i]>0 && !visited[i]){
+                pushQ(i);
+                visited[i] = true;
+            }
+        }       
+    }    
+}
+
+void outputBFS(){
+    cout << "BFS : " ;
+    for(int i= 0;i < nbfs;i++){
+        
+    }
+}
+
+void DFS(){
     
 }
+
 
 void menu(){
     cout  << "1. Doc du lieu tu file\n"
@@ -167,10 +193,11 @@ void run(){
             output_matrix();
             break;
         case 3:
-         
+            BFS(1);
+            outputBFS();
             break;
         case 4:
-         
+
             break;
         case 5:
          
@@ -198,5 +225,6 @@ void run(){
 int main(){
     init();
     run();
+    
     return 1;
 }
