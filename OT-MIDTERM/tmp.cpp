@@ -136,7 +136,7 @@ void primMST() {
 
     cout << "Cay khung nho nhat (Prim):\n";
     for (int i = 1; i < n; i++) {
-        cout << (char)(parent[i] + 'a') << " - " << (char)(i + 'a') << " : " << adjMatrix[i][parent[i]] << endl;
+        cout << name[parent[i]] << " - " << name[i] << " : " << adjMatrix[i][parent[i]] << endl;
     }
 }
 

@@ -1,9 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include <time.h>
 using namespace std;
 #define MAX 10
-#define INF 1e9
+#define INF 100000
 int vertices_quantity , edges_quantity;
 int matrix[MAX][MAX];
 char name[]={'A','B','C','D','E','G','H','K'};
@@ -169,6 +168,36 @@ void printDegrees(){
     }
 }
 
+void primMST() {
+    int parent[MAX];
+    int key[MAX];
+    fill(key, key + MAX, INF);
+    bool inMST[MAX] = {false};
+    key[0] = 0;
+    parent[0] = -1;
+    for(int count =0;count <vertices_quantity-1;count++){
+         int minKey = INF, u;
+        for(int v=0;v<vertices_quantity;v++){
+            if(!inMST[v] && key[v] < minKey){
+                minKey=key[v];
+                u=v;
+            }
+        }
+    inMST[u] = true;
+    for (int v = 0; v < vertices_quantity; v++) {
+            if (matrix[u][v] && !inMST[v] && matrix[u][v] < key[v]) {
+                parent[v] = u;
+                key[v] = matrix[u][v];
+            }
+        }
+    }
+    cout << "Cay khung nho nhat (Prim):\n";
+    for (int i = 1; i < vertices_quantity; i++) {
+        cout << name[parent[i]] << " - " << name[i] << " : " << matrix[i][parent[i]] << endl;
+    }
+}
+
+
 void menu(){
     cout  << "1. Doc du lieu tu file\n"
         <<"2. Xuat ma tran \n"
@@ -200,7 +229,7 @@ void run(){
         case 4: cout << ((isUndirected())? "Do thi da cho la do thi vo huong\n" : "Do thi da cho la do thi co huong\n"); break;
         case 5: printDegrees(); break;
         case 6: break;
-        case 7: break;
+        case 7: primMST();break;
         case 8: break;
         case 0: cout << "Thoat chuong trinh!\n"; break;
         default:  cout <<"Lua chon khong hop le!\n";
