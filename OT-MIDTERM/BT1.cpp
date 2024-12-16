@@ -85,8 +85,8 @@ void inp_matrix(){
     ifstream ifs("bt1_matrixdata.txt");
     if(ifs.is_open()){
         ifs >> vertices_quantity;
-        for(int i=1;i<=vertices_quantity;i++){
-            for(int j=1;j<=vertices_quantity;j++){
+        for(int i=0;i<vertices_quantity;i++){
+            for(int j=0;j<vertices_quantity;j++){
                 ifs >> matrix[i][j];
             }
         }
@@ -120,9 +120,9 @@ void output_matrix(){
         cout << name[i] << " ";
     }
     cout << endl;
-    for(int i=1;i<=vertices_quantity;i++){
-        cout << name[i-1] << " ";
-        for(int j=1;j<=vertices_quantity;j++){
+    for(int i=0;i<vertices_quantity;i++){
+        cout << name[i] << " ";
+        for(int j=0;j<vertices_quantity;j++){
             cout << matrix[i][j] << " ";
         }
         cout << endl;
@@ -130,36 +130,44 @@ void output_matrix(){
 }
 
 int bfs[MAX], nbfs=0;
-bool visited[MAX] ={false};
 void BFS(int s){
+    bool visited[MAX] = {false};
     initQueue();
     pushQ(s);
     visited[s] = true;
+    cout << "Thu tu duyet BFS: ";
     while(!isEmptyQ()){
         int p;
         popQ(p);
         bfs[nbfs++] = p;
         cout << name[p] << " ";
-        for(int i=1;i<=vertices_quantity;i++){
+        for(int i=0;i<vertices_quantity;i++){
             if(matrix[p][i]>0 && !visited[i]){
-                pushQ(i);
                 visited[i] = true;
+                pushQ(i);
             }
         }       
     }    
 }
 
-void outputBFS(){
-    cout << "BFS : " ;
-    for(int i= 0;i < nbfs;i++){
-        
+bool isUndirected (){
+    for(int i=0;i<vertices_quantity;i++){
+        for(int j=0;j<vertices_quantity;j++){
+            if(matrix[i][j] != matrix[j][i])  return false;
+        }
+    }
+    return true;
+}
+
+void printDegrees(){
+    for(int i=0;i<vertices_quantity;i++){
+        int degree =0;
+        for(int j=0;j<vertices_quantity;j++){
+            if(matrix[i][j]!=0) degree++;
+        }
+        cout << "Bac cua dinh " << name[i] << " la : " << degree << endl; 
     }
 }
-
-void DFS(){
-    
-}
-
 
 void menu(){
     cout  << "1. Doc du lieu tu file\n"
@@ -186,36 +194,16 @@ void run(){
         } while(choice >8 || choice <0);
         switch (choice)
         {
-        case 1:
-            inp_matrix();
-            break;
-        case 2:
-            output_matrix();
-            break;
-        case 3:
-            BFS(1);
-            outputBFS();
-            break;
-        case 4:
-
-            break;
-        case 5:
-         
-            break;
-        case 6:
-         
-            break;
-        case 7:
-         
-            break;
-        case 8:
-         
-            break;
-        case 0:
-            cout << "Cam on da su dung chuong trinh!\n";
-            break;
-        default:
-            break;
+        case 1: init(); inp_matrix(); break;
+        case 2: output_matrix(); break;
+        case 3: BFS(0); break;
+        case 4: cout << ((isUndirected())? "Do thi da cho la do thi vo huong\n" : "Do thi da cho la do thi co huong\n"); break;
+        case 5: printDegrees(); break;
+        case 6: break;
+        case 7: break;
+        case 8: break;
+        case 0: cout << "Thoat chuong trinh!\n"; break;
+        default:  cout <<"Lua chon khong hop le!\n";
         }
         system("pause");
         system("cls");
@@ -223,7 +211,6 @@ void run(){
 }
 
 int main(){
-    init();
     run();
     
     return 1;
