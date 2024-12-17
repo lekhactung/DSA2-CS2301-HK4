@@ -220,26 +220,42 @@ void swap(edge &a, edge &b){
 
 
 void kruskal(){
-    int count = -1;
+    int count = 0;
     for(int i=0;i<vertices_quantity;i++){
-        for (int j=0;j<vertices_quantity;j++){
-            if(matrix[i][j] > 0){
+        for (int j=i+1;j<vertices_quantity;j++){
+            if(matrix[i][j] >0){
                 edge tmp; tmp.u = i; tmp.v = j; tmp.w = matrix[i][j];
-                edges[++count] = tmp;    
+                edges[count++] = tmp;    
+            }
+        }
+    }
+    cout << count << endl;
+    for(int i=0;i<count-1;i++){
+        for(int j = i+1;j<count;j++){
+            if(cmp(edges[i],edges[j])){
+                swap(edges[i],edges[j]);
             }
         }
     }
     for(int i=0;i<count;i++){
         cout << edges[i].u << " " << edges[i].v << " " << edges[i].w << endl;
     }
-    // for(int i=0;i<count-1;i++){
-    //     for(int j = i+1;j<count;j++){
-    //         if(!cmp(edges[i],edges[j])){
-    //             swap(edges[i],edges[j]);
-    //         }
-    //     }
-    // }
-}
+    for(int i=0;i<vertices_quantity;i++){
+        parent[i] = i;
+    }
+    cout << "Cay khung nho nhat: (kruskal) \n";
+    int totalW = 0;
+    for(edge e :edges){
+        int uRoot = findParent(e.u);
+        int vRoot = findParent(e.v);
+        if(uRoot!= vRoot){
+            cout << name[e.u] << " - " << name[e.v] << endl;
+            totalW += e.w;
+            parent[uRoot] = vRoot;
+        }
+    } 
+    cout << "Tong trong so: " << totalW << endl;
+} 
 
 
 

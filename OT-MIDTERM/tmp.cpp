@@ -163,6 +163,7 @@ void kruskalMST() {
             }
         }
     }
+    cout << "/// " <<edges.size() << endl;
     for(int i=0;i<edges.size();i++){
         cout << edges[i].u << " " << edges[i].v << " " << edges[i].weight << endl;
     }
