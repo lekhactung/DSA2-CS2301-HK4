@@ -197,6 +197,49 @@ void primMST() {
     }
 }
 
+struct edge{
+    int u,v,w;
+};
+
+bool cmp(edge a, edge b){
+    return a.w > b.w;
+}
+
+edge edges[MAX];
+int parent[MAX];
+int findParent(int u){
+    if(parent[u] == u )return u;
+    return parent[u] = findParent(parent[u]);
+}
+
+void swap(edge &a, edge &b){
+    edge tmp = a;
+    a = b; 
+    b = tmp;
+}
+
+
+void kruskal(){
+    int count = -1;
+    for(int i=0;i<vertices_quantity;i++){
+        for (int j=0;j<vertices_quantity;j++){
+            if(matrix[i][j] >0){
+                edge tmp; tmp.u = i; tmp.v = j; tmp.w = matrix[i][j];
+                edges[++count] = tmp;    
+            }
+        }
+    }
+    cout << count << endl;
+    for(int i=0;i<count-1;i++){
+        for(int j = i+1;j<count;j++){
+            if(!cmp(edges[i],edges[j])){
+                swap(edges[i],edges[j]);
+            }
+        }
+    }
+}
+
+
 
 void menu(){
     cout  << "1. Doc du lieu tu file\n"
@@ -230,7 +273,7 @@ void run(){
         case 5: printDegrees(); break;
         case 6: break;
         case 7: primMST();break;
-        case 8: break;
+        case 8: kruskal(); break;
         case 0: cout << "Thoat chuong trinh!\n"; break;
         default:  cout <<"Lua chon khong hop le!\n";
         }

@@ -15,6 +15,7 @@ int adjMatrix[MAX][MAX]; // Ma tran ke trong so
 
 // 1. Tao file Input.txt
 void createInputFile() {
+    
     ofstream outFile("Input.txt");
     cout << "Nhap so dinh cua do thi: ";
     cin >> n;
