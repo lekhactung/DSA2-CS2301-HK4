@@ -108,13 +108,50 @@ void DFS_recursion(int s){
     }
 }
 
-int main(){
-    inp();
-    // output_list();
-    // printDegree();
-    DFS(0);
-    // DFS_recursion(0);
+void menu(){
+    cout << "1. Input \n" 
+        <<"2. Xuat danh sach trong so \n"
+        <<"3. DFS khong dung de quy \n"
+        <<"4. DFS dung de quy \n"
+        <<"5. So bac cua moi dinh trong do thi \n"
+        <<"6.  \n"
+        <<"7. Prim algorithym  \n"
+        <<"8. Kruskal algorithym  \n"
+        <<"0. Thoat chuong trinh! \n"
+        <<"Chon chuong trinh : ";
 
+}
+
+void run(){
+    int choice;
+    do{
+        menu();
+        do{
+            cin >> choice;
+            if(choice>8||choice<0){
+                cout <<"Lua chon khong hop le, vui long chon lai!\n";
+            }
+        } while(choice >8 || choice <0);
+        switch (choice)
+        {
+        case 1: inp(); break;
+        case 2: output_list(); break;
+        case 3: DFS_recursion(0); break;
+        case 4:  break;
+        case 5: printDegree(); break;
+        case 6: break;
+        case 7: break;
+        case 8:  break;
+        case 0: cout << "Thoat chuong trinh!\n"; break;
+        default:  cout <<"Lua chon khong hop le!\n";
+        }
+        system("pause");
+        system("cls");
+    } while(choice!=0);
+}
+
+int main(){
+    run();
     return 1;
 }
 
