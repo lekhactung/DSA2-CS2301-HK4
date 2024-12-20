@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
+// #include <vector>
 #include <stack>
 using namespace std;
 #define MAX 100
@@ -100,7 +100,6 @@ void DFS(int x){
 		}
 	}
 }
-
 
 void DFS_recursion(int s){
     if(!visited[s]){
