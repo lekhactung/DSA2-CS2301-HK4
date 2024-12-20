@@ -192,9 +192,13 @@ void primMST() {
         }
     }
     cout << "Cay khung nho nhat (Prim):\n";
+    int totalW = 0;
     for (int i = 1; i < vertices_quantity; i++) {
         cout << name[parent[i]] << " - " << name[i] << " : " << matrix[i][parent[i]] << endl;
+        totalW  += matrix[i][parent[i]];
     }
+    cout << "Tong trong so: " << totalW << endl;
+
 }
 
 struct edge{
@@ -229,7 +233,6 @@ void kruskal(){
             }
         }
     }
-    cout << count << endl;
     for(int i=0;i<count-1;i++){
         for(int j = i+1;j<count;j++){
             if(cmp(edges[i],edges[j])){
@@ -237,9 +240,9 @@ void kruskal(){
             }
         }
     }
-    for(int i=0;i<count;i++){
-        cout << edges[i].u << " " << edges[i].v << " " << edges[i].w << endl;
-    }
+    // for(int i=0;i<count;i++){
+    //     cout << edges[i].u << " " << edges[i].v << " " << edges[i].w << endl;
+    // }
     for(int i=0;i<vertices_quantity;i++){
         parent[i] = i;
     }
