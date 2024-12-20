@@ -187,7 +187,7 @@ void output_DFS()
 	for (int i = 0; i<ndfs; i++)
 		cout << dfs[i] << " ";
 }
-void main()
+int main()
 {
 	Node* heads[MAX];
 	init(heads);
@@ -195,13 +195,14 @@ void main()
 	readFile(heads, "input.txt");
 	convertToMatrix(A, heads);
 	output();
-	khoitaochuaxet();
-	DFS(0);
-	output_DFS();
-	cout << endl;
+	// khoitaochuaxet();
+	// DFS(0);
+	// output_DFS();
+	// cout << endl;
 	dFs(0);
 	cout << endl;
 	khoitaochuaxet();
 	dfsRecursion(0);
 	system("pause");
+	return 0;
 }
