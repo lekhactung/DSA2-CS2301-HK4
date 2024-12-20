@@ -74,26 +74,28 @@ void output_matrix(){
 //     return s.top == -1;
 // }
 
-int visited[MAX] = {false};
+int visited[MAX];
+
+void initVisited(){
+    visited[MAX] = {false};
+}
+
 void DFS(int x){
-    stack <int> s;
-    // initStack(s);
-    s.push(x);
-    // visited[x] = true;
-    while(!s.empty()){
-        int node = s.top();
-        s.pop();
-        if(!visited[node]){
-            cout << name[node] << " ";
-            visited[node] = true;
-            for (int i = 0; i < n; i++){
-				if (matrix[node][i] == 1 && !visited[i]) {
+	stack<int> s;
+	s.push(x);
+	while (!s.empty()) {
+		int temp = s.top(); s.pop();
+		if (!visited[temp]) {
+			cout << name[temp] << " ";
+			visited[temp] = true;
+			for (int i = 0; i < n; i++) {
+				if (matrix[temp][i] > 0 && !visited[temp]) {
 					s.push(i);
 					break;
 				}
 			}
-        } 
-    }
+		}
+	}
 }
 
 void DFS_recursion(int s){
@@ -136,8 +138,8 @@ void run(){
         {
         case 1: inp(); break;
         case 2: output_list(); break;
-        case 3: DFS_recursion(0); break;
-        case 4:  break;
+        case 3: initVisited(); DFS_recursion(0); break;
+        case 4: initVisited(); DFS(0);break;
         case 5: printDegree(); break;
         case 6: break;
         case 7: break;
@@ -150,8 +152,14 @@ void run(){
     } while(choice!=0);
 }
 
+void test(){
+    inp();
+    DFS(0);
+}
+
 int main(){
     run();
+    // test();
     return 1;
 }
 
