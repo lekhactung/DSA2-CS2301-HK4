@@ -77,10 +77,13 @@ void output_matrix(){
 int visited[MAX];
 
 void initVisited(){
-    visited[MAX] = {false};
+    for(int i =0;i<n;i++){
+        visited[i] = false;
+    }
 }
 
 void DFS(int x){
+    initVisited();
 	stack<int> s;
 	s.push(x);
 	while (!s.empty()) {
@@ -89,7 +92,7 @@ void DFS(int x){
 			cout << name[temp] << " ";
 			visited[temp] = true;
 			for (int i = 0; i < n; i++) {
-				if (matrix[temp][i] > 0 && !visited[temp]) {
+				if (matrix[temp][i] > 0 && !visited[i]) {
 					s.push(i);
 					break;
 				}
@@ -97,6 +100,7 @@ void DFS(int x){
 		}
 	}
 }
+
 
 void DFS_recursion(int s){
     if(!visited[s]){
@@ -138,8 +142,8 @@ void run(){
         {
         case 1: inp(); break;
         case 2: output_list(); break;
-        case 3: initVisited(); DFS_recursion(0); break;
-        case 4: initVisited(); DFS(0);break;
+        case 3: initVisited();DFS_recursion(0); break;
+        case 4: DFS(0);break;
         case 5: printDegree(); break;
         case 6: break;
         case 7: break;
