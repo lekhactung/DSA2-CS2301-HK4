@@ -176,7 +176,7 @@ void primMST() {
     key[0] = 0;
     parent[0] = -1;
     for(int count =0;count <vertices_quantity-1;count++){
-         int minKey = INF, u;
+        int minKey = INF, u;
         for(int v=0;v<vertices_quantity;v++){
             if(!inMST[v] && key[v] < minKey){
                 minKey=key[v];
