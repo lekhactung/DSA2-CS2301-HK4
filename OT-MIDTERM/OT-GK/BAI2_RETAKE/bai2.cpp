@@ -26,7 +26,6 @@ void inpList(){
         }
     }
 }
-
 void output_matrix(){
     cout << "  ";
     for(int i=0;i<n;i++){
@@ -41,7 +40,6 @@ void output_matrix(){
         cout << endl;
     }
 }
-
 void output_list(){
     for(int i=0;i<n;i++){
         for(int j= i;j<n;j++){
@@ -51,13 +49,11 @@ void output_list(){
         }
     }
 }
-
 void initVisited(bool visited[]){
     for(int i=0;i<n;i++){
         visited[i] = false;
     }
 }
-
 void DFS(int u){
     bool visited[MAX];
     initVisited(visited);
@@ -74,12 +70,11 @@ void DFS(int u){
         }
     }
 }
-
 bool visited[MAX] = {false};
 void DFS_recursion(int u){
     if(!visited[u]){
         visited[u] = true;
-        cout << name[u] << " ";
+        cout  << name[u] << " ";
         for(int i=0;i<n;i++){
             if(!visited[i]){
                 DFS_recursion(i);
@@ -87,7 +82,6 @@ void DFS_recursion(int u){
         }
     }
 }
-
 void printDegree(){
     for(int i=0;i<n;i++){
         int degree = 0;
@@ -99,7 +93,6 @@ void printDegree(){
         cout << name[i] << " : " << degree << endl;
     }
 }
-
 void DFS_xy(int x, int y){
     bool visited[MAX];
     initVisited(visited);
@@ -120,7 +113,6 @@ void DFS_xy(int x, int y){
         }
     }
 }
-
 void primMST(){
     int parent[MAX], key[MAX];
     fill(key,key+MAX,INF);
@@ -147,24 +139,20 @@ void primMST(){
         cout << name[parent[i]] << " --> " << name[i] << " : " << matrix[parent[i]][i] << endl;
     }
 }
-
 bool cmp(edge a,edge b){
     return a.w > b.w;
 }
-
 void swap(edge &a , edge &b){
     edge tmp = a;
     a = b;
     b = tmp;
 }
-
 edge edges[MAX];
 int parent[MAX];
 int findParent(int u){
     if(parent[u] == u) return u;
     return parent[u] = findParent(parent[u]);
 }
-
 void kruskal(){
     int count = 0;
     for(int i=0;i<n;i++){
@@ -200,21 +188,17 @@ void kruskal(){
     }
     cout << "Tong trong so la : " << totalW;
 }
-
 struct node{
     int info;
     node *next;
 };
-
 node *head,*tail;
 void initQ(){
     head = tail = NULL;
 }
-
 bool isEmpty(){
     return head == NULL;
 }
-
 void pushQ(int x){
     node *p = new node;
     if(p==NULL){
@@ -222,41 +206,44 @@ void pushQ(int x){
     }
     p->info = x;
     p->next = NULL;
-    if(tail==NULL){
-        head == p;
-    }
-    else{
+    if(tail == NULL){
+        head = p;
+    } else{
         tail->next = p;
     }
     tail = p;
 }
-
 void popQ(int &x){
     if(head!=NULL){
         node *p = head;
         x = p->info;
         head = head->next;
-        if(head==NULL){
+        if(head == NULL){
             tail = NULL;
         }
         delete p;
     }
 }
-
 int bfs[MAX],nbfs=0;
 void BFS(int s){
     bool visited[MAX] = {false};
     initQ();
     pushQ(s);
     visited[s] = true;
-    cout << "Thu tu duye BFS : " ;
+    cout <<"Thu tu duyet BFS : " ;
     while(!isEmpty()){
         int p;
         popQ(p);
-        bfs[nbfs]
+        bfs[nbfs++] = p;
+        cout << name[p] << " ";
+        for(int i=0;i<n;i++){
+            if(matrix[p][i] != 0 && !visited[i]){
+                visited[i] = true;
+                pushQ(i);
+            }
+        }
     }
 }
-
 void menu(){
     cout << "1. Input \n" 
         <<"2. Xuat danh sach trong so \n"
@@ -276,11 +263,12 @@ void test(){
     inpList();
     // output_list();
     // DFS(0);
-    // DFS_recursion(0);
+    DFS_recursion(0);
     // printDegree();
     // DFS_xy(0,5);
     // primMST();
     // kruskal();
+    // BFS(0);
 }
 
 int main(){
