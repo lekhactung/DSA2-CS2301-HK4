@@ -54,7 +54,6 @@ void init(){
     vertices_quantity =0;
     edges_quantity =0;
     matrix[MAX][MAX] = {0};
-    
 }
 
 void inp(){
@@ -73,7 +72,6 @@ void inp(){
                 matrix[y][x] = z;
             }
         }
-
     } else{
         cout << "Khong the mo file! \n";
     }
@@ -300,8 +298,17 @@ void run(){
     } while(choice!=0);
 }
 
+void test(){
+    // inp();
+    // output_matrix();
+    // exp_matrix();
+    inp_matrix();
+    output_matrix();
+
+}
+
 int main(){
-    run();
-    
+    // run();
+    test();
     return 1;
 }
