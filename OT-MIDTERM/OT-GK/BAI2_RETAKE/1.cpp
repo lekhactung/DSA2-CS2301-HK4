@@ -4,49 +4,56 @@
 using namespace std;
 #define MAX 100
 #define INF 10000000
-
-int n , m;
-int matrix[MAX][MAX];
 char name[]={'A','B','C','D','E','F','G','H','I'};
-struct edge {
-    int u,v,w;
-};
+int n,m;
+int matrix[MAX][MAX];
 
-void inpList(){
+void inp(){
     ifstream ifs("bt2data.txt");
     if(!ifs.is_open()){
-        return;
-    }
-    ifs >> n >> m;
+        cout << "Khong mo duoc file!";return;
+    } 
+    ifs >> n >> m ;
     for(int i=0;i<m;i++){
-        for(int j=0;j<m;j++){
-            int x,y,w; ifs >> x >> y >> w;
-            matrix[x][y] = w;
-            matrix[y][x] = w;  
-        }
+        int x,y,z; ifs >> x >> y >> z;
+        matrix[x][y] = matrix[y][x] = z;
     }
 }
-void output_matrix(){
+
+void outputMatrix(){
     cout << "  ";
     for(int i=0;i<n;i++){
-        cout  <<name[i] << " ";
+        cout << name[i] << " ";
     }
     cout << endl;
     for(int i=0;i<n;i++){
         cout << name[i] << " ";
-        for(int j =0 ; j<n;j++){
+        for(int j=0;j<n;j++){
             cout << matrix[i][j] << " ";
         }
         cout << endl;
     }
 }
-void output_list(){
+
+void outputList(){
     for(int i=0;i<n;i++){
-        for(int j= i;j<n;j++){
+        for(int j=i+1;j<n;j++){
             if(matrix[i][j]!=0 ){
-                cout << i << " " << j << " " << matrix[i][j] << endl;
+                cout << i << " - " << j << " : " << matrix[i][j] << endl; 
             }
         }
+    }
+}
+
+void printDegree(){
+    for(int i=0;i<n;i++){
+        int degree = 0;
+        for(int j=i+1;j<n;j++){
+            if(matrix[i][j]!=0 ){
+                degree++;
+            }
+        }
+        cout << "so canh cua canh " <<name[i] << " : " << degree << endl;
     }
 }
 void initVisited(bool visited[]){
@@ -54,28 +61,30 @@ void initVisited(bool visited[]){
         visited[i] = false;
     }
 }
+
 void DFS(int u){
     bool visited[MAX];
     initVisited(visited);
     stack <int> s;
     s.push(u);
     while(!s.empty()){
-        int tmp = s.top(); s.pop();
+        int tmp = s.top();s.pop();
         cout << name[tmp] << " ";
         visited[tmp] = true;
         for(int i=0;i<n;i++){
-            if(matrix[tmp][i]!= 0 && !visited[i]){
+            if(matrix[tmp][i]!=0 && !visited[i]){
                 s.push(i);
                 break;
             }
         }
     }
 }
-bool visited[MAX] = {false};
+
+bool visited[MAX];
 void DFS_recursion(int u){
     if(!visited[u]){
+        cout << name[u] << " ";
         visited[u] = true;
-        cout  << name[u] << " ";
         for(int i=0;i<n;i++){
             if(!visited[i]){
                 DFS_recursion(i);
@@ -83,168 +92,162 @@ void DFS_recursion(int u){
         }
     }
 }
-void printDegree(){
-    for(int i=0;i<n;i++){
-        int degree = 0;
-        for(int j=0;j<n;j++){
-            if(matrix[i][j]!=0){
-                degree++;
-            }
-        }
-        cout << name[i] << " : " << degree << endl;
-    }
-}
-void DFS_xy(int x, int y){
-    bool visited[MAX];
-    initVisited(visited);
-    stack <int> s;
-    s.push(x);
-    while(!s.empty()){
-        int tmp = s.top(); s.pop();
-        visited[tmp] = true;
-        cout << name[tmp] << " ";
-        for(int i = 0 ;i < n;i++){
-            if(matrix[tmp][i] != 0 && !visited[i]){
-                s.push(i);
-                break;
-            }
-        }
-        if(tmp==y){
-            break;
-        }
-    }
-}
+
 void primMST(){
-    int parent[MAX], key[MAX];
+    int parent[MAX],key[MAX];
     fill(key,key+MAX,INF);
-    bool inMST[MAX] ={ false};
+    bool inMST[MAX] = {false};
     parent[0] = -1;
     key[0] = 0;
     for(int i=0;i<n;i++){
-        int minkey = INF,u;
+        int minKey = INF,u;
         for(int j=0;j<n;j++){
-            if(!inMST[j] && key[j] < minkey){
-                minkey = key[j];
+            if(!inMST[j] && key[j] < minKey){
+                minKey = key[j];
                 u = j;
             }
         }
         inMST[u] = true;
         for(int j=0;j<n;j++){
-            if(matrix[u][j]!=0 && !inMST[j] && matrix[u][j] < key[j]){
+            if(matrix[u][j]  && !inMST[j] && matrix[u][j] < key[j]){
                 parent[j] = u;
                 key[j] = matrix[u][j];
             }
         }
     }
     for(int i=1;i<n;i++){
-        cout << name[parent[i]] << " --> " << name[i] << " : " << matrix[parent[i]][i] << endl;
+        cout<< name[parent[i]] << " - " << name[i] << " " << matrix[parent[i]][i] << endl;
     }
 }
+
+struct edge{
+    int u,v,w;
+};
+
 bool cmp(edge a,edge b){
     return a.w > b.w;
 }
-void swap(edge &a , edge &b){
+
+void swap(edge &a, edge &b){
     edge tmp = a;
-    a = b;
+    a = b ;
     b = tmp;
 }
-edge edges[MAX];
 int parent[MAX];
+edge edges[MAX];
 int findParent(int u){
     if(parent[u] == u) return u;
     return parent[u] = findParent(parent[u]);
 }
+
 void kruskal(){
-    int count = 0;
+    int count =0 ;
     for(int i=0;i<n;i++){
-        for(int j=0;j<i+1;j++){
+        for(int j=+1;j<n;j++){
+            edge tmp;
             if(matrix[i][j]!=0){
-                edge tmp; tmp.u = i; tmp.v = j; tmp.w = matrix[i][j];
+                tmp.u = i ; tmp.v = j; tmp.w = matrix[i][j];
                 edges[count++] = tmp;
             }
         }
     }
-    for(int i=0;i<count-1;i++){
-        for(int j = i +1;j< count;j++){
+    for(int i=0;i<count;i++){
+        for(int j = i+1;j<count ;j++){
             if(cmp(edges[i],edges[j])){
                 swap(edges[i],edges[j]);
             }
         }
     }
-    // for(int i=0;i<count;i++){
-    //     cout << edges[i].u << " " << edges[i].v << " " << edges[i].w << endl;
-    // }
-    for(int i=0;i<n;i++){
+    for(int i =0 ;i<n;i++){
         parent[i] = i;
     }
     int totalW = 0;
-    for(edge e : edges){
+    for(edge e: edges){
         int uRoot = findParent(e.u);
         int vRoot = findParent(e.v);
-        if(uRoot != vRoot ){
-            cout << name[e.u] << " - " << name[e.v] << " : " << e.w <<endl;
+        if(uRoot != vRoot){
+            cout << name[e.u] << " - " << name[e.v] << " :  "  << e.w << endl;
             totalW += e.w;
             parent[uRoot] = vRoot;
         }
     }
-    cout << "Tong trong so la : " << totalW;
+    cout << totalW;
 }
-struct node{
+
+struct node {
     int info;
     node *next;
 };
+
 node *head,*tail;
+
 void initQ(){
     head = tail = NULL;
 }
+
 bool isEmpty(){
     return head == NULL;
 }
+
 void pushQ(int x){
     node *p = new node;
     if(p==NULL){
         return;
-    }
+    } 
     p->info = x;
     p->next = NULL;
-    if(tail == NULL){
+    if(head== NULL){
         head = p;
     } else{
         tail->next = p;
     }
     tail = p;
 }
+
 void popQ(int &x){
     if(head!=NULL){
         node *p = head;
         x = p->info;
         head = head->next;
-        if(head == NULL){
+        if(head==NULL){
             tail = NULL;
         }
         delete p;
     }
 }
-int bfs[MAX],nbfs=0;
+
+int bfs[MAX], nbfs = 0;
 void BFS(int s){
     bool visited[MAX] = {false};
     initQ();
     pushQ(s);
     visited[s] = true;
-    cout <<"Thu tu duyet BFS : " ;
     while(!isEmpty()){
-        int p;
-        popQ(p);
+        int p; popQ(p);
         bfs[nbfs++] = p;
         cout << name[p] << " ";
         for(int i=0;i<n;i++){
-            if(matrix[p][i] != 0 && !visited[i]){
+            if(matrix[p][i]!=0 && !visited[i]){
                 visited[i] = true;
                 pushQ(i);
             }
         }
     }
 }
+
+void test(){
+    system("cls");
+    inp();
+    // outputMatrix();
+    // outputList();
+    // printDegree();
+    // DFS(0);
+    // DFS_recursion(0);
+    // primMST();
+    // kruskal();
+    BFS(0);
+}
+
 void menu(){
     cout << "1. Input \n" 
         <<"2. Xuat danh sach trong so \n"
@@ -258,22 +261,60 @@ void menu(){
         <<"Chon chuong trinh : ";
 
 }
+void run(){
+    int choice;
+    do{
+        do{
+            system("cls");
+            menu();
+            cin >> choice;
+            if(choice<0  || choice >8){
+                cout << "Chuong trinh khong hop le, vui long nhap lai!\n";
+            system("pause");
+            }
 
+        } while(choice<0  || choice >8);
+        switch (choice)
+        {
+            case 1:
+                inp();
+                break;
+            case 2:
+                outputList();
+                break;
+            case 3:
+                int c; cout <<"Nhap dinh bat dau duyet : " ; cin >> c;
+                DFS(c);
+                break;
+            case 5:
+                printDegree();
+                break;
+            case 4:
+                int u; cout <<"Nhap dinh bat dau duyet : " ; cin >> u;
+                DFS_recursion(u);
+                break;
+            case 6:
 
-void test(){
-    inpList();
-    // output_list();
-    // DFS(0);
-    DFS_recursion(0);
-    // printDegree();
-    // DFS_xy(0,5);
-    // primMST();
-    // kruskal();
-    // BFS(0);
+                break;
+            case 7:
+                primMST();
+                break;
+            case 8:
+                kruskal();
+                break;
+            case 0: 
+                cout <<"Thoat chuong trinh! \n";
+
+        default:
+            break;
+        }
+        system("pause");
+        
+    } while(choice != 0);
+    
 }
-
 int main(){
-    test();
-
+    // test();
+    run();
     return 1;
 }
