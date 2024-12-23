@@ -68,11 +68,11 @@ void DFS(int u){
     bool visited[MAX];
     initVisited(visited);
     while(!s.empty()){
-        int tmp = s.top(); s.pop();
-        visited[tmp] = true;
-        cout << name[tmp] << " ";
+        int p = s.top();s.pop();
+        cout << name[p] << " ";
+        visited[p] = true;
         for(int i=0;i<n;i++){
-            if(matrix[tmp][i]!=0 && !visited[i]){
+            if(matrix[p][i]!=0 && !visited[i]){
                 s.push(i);
                 break;
             }
@@ -85,96 +85,15 @@ void DFS_recursion(int u){
     if(!visited[u]){
         cout << name[u] << " ";
         visited[u] = true;
-        for(int i =0;i<n;i++){
+        for(int i=0;i<n;i++){
             if(!visited[i]){
                 DFS_recursion(i);
-            }
-        }   
-    }
-}
-
-void primMST(){
-    int parent[MAX],key[MAX];
-    fill(key,key+MAX,INF);
-    bool inMST[MAX] = {false};
-    parent[0] = -1;
-    key[0] = 0;
-    for(int i=0;i<n;i++){
-        int minKey = INF,u;
-        for(int j=0;j<n;j++){
-            if(!inMST[j] && key[j] < minKey){
-                minKey = key[j];
-                u = j;
-            }
-        }
-        inMST[u] = true;
-        for(int j=0;j<n;j++){
-            if(matrix[u][j]  && !inMST[j] && matrix[u][j] < key[j]){
-                parent[j] = u;
-                key[j] = matrix[u][j];
-            }
+            }   
         }
     }
-    for(int i=1;i<n;i++){
-        cout<< name[parent[i]] << " - " << name[i] << " " << matrix[parent[i]][i] << endl;
-    }
 }
 
-struct edge{
-    int u,v,w;
-};
-
-bool cmp(edge a,edge b){
-    return a.w > b.w;
-}
-
-void swap(edge &a, edge &b){
-    edge tmp = a;
-    a = b ;
-    b = tmp;
-}
-int parent[MAX];
-edge edges[MAX];
-int findParent(int u){
-    if(parent[u] == u) return u;
-    return parent[u] = findParent(parent[u]);
-}
-
-void kruskal(){
-    int count =0 ;
-    for(int i=0;i<n;i++){
-        for(int j=i+1;j<n;j++){
-            edge tmp;
-            if(matrix[i][j]!=0){
-                tmp.u = i ; tmp.v = j; tmp.w = matrix[i][j];
-                edges[count++] = tmp;
-            }
-        }
-    }
-    for(int i=0;i<count;i++){
-        for(int j = i+1;j<count ;j++){
-            if(cmp(edges[i],edges[j])){
-                swap(edges[i],edges[j]);
-            }
-        }
-    }
-    for(int i =0 ;i<n;i++){
-        parent[i] = i;
-    }
-    int totalW = 0;
-    for(edge e: edges){
-        int uRoot = findParent(e.u);
-        int vRoot = findParent(e.v);
-        if(uRoot != vRoot){
-            cout << name[e.u] << " - " << name[e.v] << " :  "  << e.w << endl;
-            totalW += e.w;
-            parent[uRoot] = vRoot;
-        }
-    }
-    cout << totalW;
-}
-
-struct node {
+struct node{
     int info;
     node *next;
 };
@@ -189,14 +108,11 @@ bool isEmpty(){
     return head == NULL;
 }
 
-void pushQ(int x){
+void push(int x){
     node *p = new node;
-    if(p==NULL){
-        return;
-    } 
     p->info = x;
     p->next = NULL;
-    if(head== NULL){
+    if(head==NULL){
         head = p;
     } else{
         tail->next = p;
@@ -204,48 +120,131 @@ void pushQ(int x){
     tail = p;
 }
 
-void popQ(int &x){
+void pop(int &x){
     if(head!=NULL){
         node *p = head;
         x = p->info;
         head = head->next;
-        if(head==NULL){
+        if(head == NULL){
             tail = NULL;
         }
         delete p;
     }
 }
 
-int bfs[MAX], nbfs = 0;
+int bfs[MAX], nbfs=0;
 void BFS(int s){
-    bool visited[MAX] = {false};
     initQ();
-    pushQ(s);
+    push(s);
+    bool visited[MAX] ={false};
     visited[s] = true;
     while(!isEmpty()){
-        int p; popQ(p);
-        bfs[nbfs++] = p;
+        int p; pop(p);
         cout << name[p] << " ";
+        visited[p] = true;
         for(int i=0;i<n;i++){
-            if(matrix[p][i]!=0 && !visited[i]){
+            if(matrix[p][i] && !visited[i]){
                 visited[i] = true;
-                pushQ(i);
+                push(i);
             }
         }
     }
 }
 
+void primMST(){
+    int parent[MAX],key[MAX];
+    bool inMST[MAX] = {false};
+    fill(key,key+MAX,INF);
+    parent[0] = -1;
+    key[0] = 0;
+        int count=0;
+    for(int i=0;i<n;i++){
+        int minkey = INF, u;
+        for(int j=0;j<n;j++){
+            if(!inMST[j] && key[j]<minkey){
+                minkey = key[j];
+                u =j;
+            }
+        }
+        inMST[u] = true;
+        for(int j =0;j<n;j++){
+            if(matrix[u][j] && !inMST[j] && matrix[u][j] < key[j]){
+                parent[j] = u ;
+                key[j] = matrix[u][j];
+            }
+        }
+    }
+    for(int i=1;i<n;i++){
+        cout << name[parent[i]] << " - " << name[i] << " : " << matrix[parent[i]][i]<<endl;
+        count+=matrix[parent[i]][i];
+    }
+    cout << count;
+}
+
+struct edge{
+    int v,u,w;
+};
+bool cmp(edge a,edge b){
+    return a.w > b.w;
+}
+void swap(edge &a, edge &b){
+    edge tmp = a;
+    a = b;
+    b = tmp;
+}
+
+edge edges[MAX];
+int parent[MAX];
+int findParent(int u){
+    if(parent[u] == u ) return u;
+    return parent[u] = findParent(parent[u]);
+}
+
+void kruskal(){
+    int count;
+    for(int i=0;i<n;i++) {
+        for(int j=i+1;j<n;j++){
+            if(matrix[i][j]!=0){
+                edge tmp; tmp.u = i; tmp.v = j; tmp.w = matrix[i][j];
+                edges[count++] = tmp;
+            }
+        }
+    }  
+    for(int i=0;i<count;i++){
+        for(int j=i+1;j<count;j++){
+            if(cmp(edges[i],edges[j])){
+                swap(edges[i], edges[j]);
+            }
+        }
+    }
+    for(int i=0;i<n;i++){
+        parent[i] = i;
+    }
+    int totalW = 0;
+    for(edge e : edges){
+        int uRoot = findParent(e.u);
+        int vRoot = findParent(e.v);
+        if(uRoot!=vRoot){
+            cout << name[e.u] << " - " << name[e.v] << " : " << e.w << endl;
+            totalW += e.w;
+            parent[uRoot] = vRoot;
+        }
+    }
+    cout << totalW;
+}
+
+
 void test(){
-    // system("cls");
+    system("cls");
     inp();
     // outputMatrix();
     // outputList();
     // printDegree();
     // DFS(0);
-    DFS_recursion(0);
+    // DFS_recursion(0);
     // BFS(0);
     // primMST();
-    // kruskal();
+    kruskal();
 }
 
 void menu(){
