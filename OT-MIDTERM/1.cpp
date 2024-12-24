@@ -77,6 +77,28 @@ void DFS(int u) {
 	}
 }
 
+void DFS_1(int u,int y) {
+	stack <int> s;
+	s.push(u);
+	bool visited[MAX];
+	initVisited(visited);
+	while (!s.empty()) {
+		int p = s.top(); s.pop();
+		visited[p] = true;
+		
+		cout << name[p] << " ";
+		for (int i = 0; i < n; i++) {
+			if (matrix[p][i] && !visited[i]) {
+				s.push(i);
+				break;
+			}
+		}
+		if (p == y) {
+			return;
+		}
+	}
+}
+
 //int bfs[MAX], nbfs = 0;
 void BFS(int u) {
 	bool visited[MAX] = { false };
@@ -93,6 +115,28 @@ void BFS(int u) {
 				q.push(i);
 			}
 		}
+	}
+}
+
+void BFS_1(int u,int y) {
+	bool visited[MAX] = { false };
+	queue<int> q;
+	q.push(u);
+	visited[u] = true;
+	while (!q.empty()) {
+		int p = q.front(); q.pop();
+		//bfs[nbfs++] = p;
+		cout << name[p] << " ";
+		if (p == y) {
+			return;
+		}
+		for (int i = 0; i < n; i++) {
+			if (matrix[p][i] && !visited[i]) {
+				visited[i] = true;
+				q.push(i);
+			}
+		}
+		
 	}
 }
 
@@ -179,16 +223,45 @@ void kruskal() {
 	cout << "Tong trong so la: " << totalW << endl;
 }
 
+void printDegree() {
+	for (int i = 0; i < n; i++) {
+		int degree = 0;
+		for (int j = 0; j < n; j++) {
+			if (matrix[i][j]) {
+				degree++;
+			}
+		}
+		cout << "Canh " << name[i] << " co " << degree << " canh \n";
+	}
+}
+
+bool isDirected() {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (matrix[i][j] != matrix[j][i]) return true;
+		}
+	}
+	return false;
+}
+
 void test() {
 	inp();
 	//outputlist();
 	//DFS(0);
-	BFS(0);;
+	//DFS_1(0,5);
+	BFS_1(0,7);
 	//prim();
 	//kruskal();
+	//cout << isDirected();
+	//printDegree();
 }
 
-
+void menu() {
+	cout << "1. Nhap du lieu tu file \n"
+		<< "2. Xuat danh sach trong so \n"
+		<< "3. Duyet dinh bang DFS \n"
+		<< "4. So bac cua tung canh \n";
+}
 
 int main() {
 	test();
